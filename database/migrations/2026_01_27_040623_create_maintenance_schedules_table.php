@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-    Schema::create('maintenance_schedules', function (Blueprint $table) {
+   Schema::create('maintenance_schedules', function (Blueprint $table) {
     $table->id();
     $table->foreignId('item_id')->constrained('items')->onDelete('cascade');
     $table->string('jenis_maintenance');
     $table->integer('interval_hari');
     $table->date('last_maintenance')->nullable();
     $table->date('next_maintenance');
-    $table->enum('status', ['aktif', 'selesai']);
+    $table->enum('status', ['dijadwalkan', 'proses', 'selesai'])->default('dijadwalkan');
     $table->text('catatan')->nullable();
     $table->timestamps();
 });
+
 
 
     }
