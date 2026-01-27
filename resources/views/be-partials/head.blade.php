@@ -7,14 +7,8 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
         name='viewport' />
     <title>SIMAR | Sistem Informasi Maintenance & Repair</title>
-
-    {{-- Dashboard CSS --}}
-    {{-- <link rel="stylesheet" href="{{ asset('css/dashboard-layout.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/charts-layout.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/widgets.css') }}"> --}}
-    <link rel="icon" type="image/x-icon" href="{{ asset('images/icon.png') }}" />
-    <link rel="stylesheet" href="be-assets/css/bootstrap.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo.png') }}" />
+    <link rel="stylesheet" href="{{ asset('be-assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="{{ asset('be-assets/css/ready.css') }}">
