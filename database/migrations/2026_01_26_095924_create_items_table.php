@@ -17,8 +17,10 @@ return new class extends Migration
     $table->string('kategori');
     $table->string('lokasi');
     $table->enum('kondisi', ['baik', 'rusak', 'maintenance'])->default('baik');
+    $table->text('catatan')->nullable(); // tambahan sesuai saran mentor
     $table->timestamps();
 });
+
 
 }
 
