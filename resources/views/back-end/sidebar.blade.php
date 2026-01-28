@@ -59,17 +59,17 @@
 </li>
 
             <li class="nav-item">
-                <a href="#">
+                <a href="{{ route('maintenance.index') }}">
                     <i class="la la-keyboard-o"></i>
-                    <p>Forms</p>
+                    <p>Maintenece Scedule</p>
                     <span class="badge badge-count">50</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="#">
+                <a href="{{ route('repairs.index') }}">
                     <i class="la la-th"></i>
-                    <p>Tables</p>
+                    <p>Repair</p>
                     <span class="badge badge-count">6</span>
                 </a>
             </li>
