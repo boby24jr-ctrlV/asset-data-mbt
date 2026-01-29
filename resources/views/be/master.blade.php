@@ -1,34 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('be-partials.head')
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>SIMAR | Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <!-- GOOGLE FONT -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900">
+
+    <!-- ICON -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/ready.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}">
 </head>
 
-<body style="min-height:100vh; display:flex; flex-direction:column;">
+<body>
 
-    {{-- Sidebar --}}
-    @include('back-end.sidebar')
+<div class="wrapper">
 
-    {{-- Navbar --}}
+    {{-- NAVBAR --}}
     @include('back-end.navbar')
 
-    <!-- Main Content Wrapper -->
-    <div class="main-wrapper" id="mainWrapper" style="flex:1; display:flex; flex-direction:column;">
-        @include('be-partials.header')
+    {{-- SIDEBAR --}}
+    @include('back-end.sidebar')
 
-        <!-- Main Content -->
-        <main class="dashboard-content" id="main-content" style="flex:1;">
+    {{-- MAIN PANEL --}}
+    <div class="main-panel">
+
+        {{-- CONTENT --}}
+        <div class="content">
             <div class="container-fluid">
                 @yield('content')
             </div>
-        </main>
+        </div>
 
-        {{-- Footer --}}
-        @include('be-partials.footer')
+        {{-- FOOTER --}}
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="copyright ml-auto">
+                    © {{ date('Y') }} SIMAR — made with ❤️
+                </div>
+            </div>
+        </footer>
+
     </div>
+</div>
 
-    {{-- Scripts --}}
-    @include('be-partials.scripts')
+{{-- JS --}}
+<script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
+<script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
+<script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
+<script src="{{ asset('assets/js/ready.min.js') }}"></script>
 
 </body>
 </html>
