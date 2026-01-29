@@ -75,7 +75,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="#">
+                <a href="{{ route('notifikasi.index') }}">
                     <i class="la la-bell"></i>
                     <p>Notifications</p>
                     <span class="badge badge-success">3</span>
@@ -83,9 +83,9 @@
             </li>
 
             <li class="nav-item">
-                <a href="#">
+                <a href="{{ route('tempat-services.index') }}">
                     <i class="la la-font"></i>
-                    <p>Typography</p>
+                    <p>Tempat Services</p>
                     <span class="badge badge-danger">25</span>
                 </a>
             </li>
