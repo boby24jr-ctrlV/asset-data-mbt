@@ -2,21 +2,46 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('back-end.dashboard');
-});
-
+/*
+|--------------------------------------------------------------------------
+| Controller Imports
+|--------------------------------------------------------------------------
+*/
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
-
-Route::resource('items', ItemController::class);
-
 use App\Http\Controllers\MaintenanceScheduleController;
-
-Route::resource('maintenance', MaintenanceScheduleController::class);
-
 use App\Http\Controllers\RepairWebController;
+use App\Http\Controllers\NotifikasiController;
+use App\Http\Controllers\TempatServiceController;
 
+/*
+|--------------------------------------------------------------------------
+| Dashboard
+|--------------------------------------------------------------------------
+*/
+Route::get('/', [DashboardController::class, 'index'])
+    ->name('dashboard');
+
+/*
+|--------------------------------------------------------------------------
+| Master Data
+|--------------------------------------------------------------------------
+*/
+Route::resource('items', ItemController::class);
+Route::resource('maintenance', MaintenanceScheduleController::class);
 Route::resource('repairs', RepairWebController::class);
+Route::resource('tempat-services', TempatServiceController::class);
 
+/*
+|--------------------------------------------------------------------------
+| Notifications
+|--------------------------------------------------------------------------
+*/
+Route::get('/notifikasi', [NotifikasiController::class, 'index'])
+    ->name('notifikasi.index');
 
+Route::post('/notifikasi/{id}/read', [NotifikasiController::class, 'markAsRead'])
+    ->name('notifikasi.read');
 
+Route::delete('/notifikasi/{id}', [NotifikasiController::class, 'destroy'])
+    ->name('notifikasi.destroy');

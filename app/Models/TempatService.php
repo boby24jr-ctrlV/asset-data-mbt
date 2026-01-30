@@ -10,4 +10,16 @@ class TempatService extends Model
     use HasFactory;
 
     protected $table = 'tempat_services';
+
+    protected $fillable = [
+        'nama_tempat',
+        'alamat',
+        'no_telepon',
+    ];
+
+    // relasi ke repair
+    public function repairs()
+    {
+        return $this->hasMany(Repair::class);
+    }
 }

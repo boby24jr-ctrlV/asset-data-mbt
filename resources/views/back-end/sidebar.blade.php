@@ -42,31 +42,36 @@
 
         <!-- MENU -->
         <ul class="nav">
-            <li class="nav-item active">
-                <a href="{{ url('/') }}">
+
+            <!-- DASHBOARD -->
+            <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <a href="{{ route('dashboard') }}">
                     <i class="la la-dashboard"></i>
                     <p>Dashboard</p>
                     <span class="badge badge-count">5</span>
                 </a>
             </li>
 
-            <li class="nav-item">
-    <a href="{{ route('items.index') }}">
-        <i class="la la-table"></i>
-        <p>Data Barang / Asset</p>
-        <span class="badge badge-count">14</span>
-    </a>
-</li>
+            <!-- DATA BARANG / ASSET -->
+            <li class="nav-item {{ request()->routeIs('items.*') ? 'active' : '' }}">
+                <a href="{{ route('items.index') }}">
+                    <i class="la la-table"></i>
+                    <p>Data Barang / Asset</p>
+                    <span class="badge badge-count">14</span>
+                </a>
+            </li>
 
-            <li class="nav-item">
+            <!-- MAINTENANCE -->
+            <li class="nav-item {{ request()->routeIs('maintenance.*') ? 'active' : '' }}">
                 <a href="{{ route('maintenance.index') }}">
                     <i class="la la-keyboard-o"></i>
-                    <p>Maintenece Scedule</p>
+                    <p>Maintenance Schedule</p>
                     <span class="badge badge-count">50</span>
                 </a>
             </li>
 
-            <li class="nav-item">
+            <!-- REPAIR -->
+            <li class="nav-item {{ request()->routeIs('repairs.*') ? 'active' : '' }}">
                 <a href="{{ route('repairs.index') }}">
                     <i class="la la-th"></i>
                     <p>Repair</p>
@@ -74,6 +79,7 @@
                 </a>
             </li>
 
+            <!-- NOTIFICATIONS -->
             <li class="nav-item">
                 <a href="#">
                     <i class="la la-bell"></i>
@@ -82,20 +88,6 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a href="#">
-                    <i class="la la-font"></i>
-                    <p>Typography</p>
-                    <span class="badge badge-danger">25</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#">
-                    <i class="la la-fonticons"></i>
-                    <p>Icons</p>
-                </a>
-            </li>
         </ul>
 
     </div>
