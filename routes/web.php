@@ -30,7 +30,7 @@ Route::get('/', [DashboardController::class, 'index'])
 Route::resource('items', ItemController::class);
 Route::resource('maintenance', MaintenanceScheduleController::class);
 Route::resource('repairs', RepairWebController::class);
-Route::resource('tempat-services', TempatServiceController::class);
+Route::resource('tempat_services', TempatServiceController::class);
 
 /*
 |--------------------------------------------------------------------------

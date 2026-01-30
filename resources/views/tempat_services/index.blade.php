@@ -5,7 +5,7 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h4 class="card-title mb-0">🏢 Data Tempat Service</h4>
-        <a href="{{ route('tempat-services.create') }}" class="btn btn-primary btn-sm">
+        <a href="{{ route('tempat_services.create') }}" class="btn btn-primary btn-sm">
             + Tambah Tempat Service
         </a>
     </div>
@@ -40,12 +40,12 @@
                         <td>{{ $item->no_telepon }}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-2 flex-wrap">
-                                <a href="{{ route('tempat-services.edit', $item->id) }}"
+                                <a href="{{ route('tempat_services.edit', $item->id) }}"
                                    class="btn btn-warning btn-sm">
                                     Edit
                                 </a>
 
-                                <form action="{{ route('tempat-services.destroy', $item->id) }}" method="POST">
+                                <form action="{{ route('tempat_services.destroy', $item->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button onclick="return confirm('Hapus data?')"

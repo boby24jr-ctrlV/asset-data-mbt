@@ -40,7 +40,7 @@ class MaintenanceScheduleController extends Controller
         ]);
 
         $next = Carbon::parse($request->last_maintenance)
-                    ->addDays($request->interval_hari);
+                    ->addDays((int)$request->interval_hari);
 
         MaintenanceSchedule::create([
             'item_id'=>$request->item_id,

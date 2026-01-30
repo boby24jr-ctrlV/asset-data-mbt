@@ -20,21 +20,9 @@
 
                 <div class="collapse show" id="collapseUser">
                     <ul class="nav">
-                        <li>
-                            <a href="#">
-                                <span class="link-collapse">My Profile</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="link-collapse">Edit Profile</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="link-collapse">Settings</span>
-                            </a>
-                        </li>
+                        <li><a href="#"><span class="link-collapse">My Profile</span></a></li>
+                        <li><a href="#"><span class="link-collapse">Edit Profile</span></a></li>
+                        <li><a href="#"><span class="link-collapse">Settings</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -48,43 +36,46 @@
                 <a href="{{ route('dashboard') }}">
                     <i class="la la-dashboard"></i>
                     <p>Dashboard</p>
-                    <span class="badge badge-count">5</span>
                 </a>
             </li>
 
-            <!-- DATA BARANG / ASSET -->
+            <!-- DATA BARANG -->
             <li class="nav-item {{ request()->routeIs('items.*') ? 'active' : '' }}">
                 <a href="{{ route('items.index') }}">
                     <i class="la la-table"></i>
                     <p>Data Barang / Asset</p>
-                    <span class="badge badge-count">14</span>
+                </a>
+            </li>
+
+            <!-- TEMPAT SERVICE (INI FIX UTAMA) -->
+            <li class="nav-item {{ request()->routeIs('tempat_services.*') ? 'active' : '' }}">
+                <a href="{{ route('tempat_services.index') }}">
+                    <i class="la la-wrench"></i>
+                    <p>Tempat Service</p>
                 </a>
             </li>
 
             <!-- MAINTENANCE -->
             <li class="nav-item {{ request()->routeIs('maintenance.*') ? 'active' : '' }}">
                 <a href="{{ route('maintenance.index') }}">
-                    <i class="la la-keyboard-o"></i>
+                    <i class="la la-calendar"></i>
                     <p>Maintenance Schedule</p>
-                    <span class="badge badge-count">50</span>
                 </a>
             </li>
 
             <!-- REPAIR -->
             <li class="nav-item {{ request()->routeIs('repairs.*') ? 'active' : '' }}">
                 <a href="{{ route('repairs.index') }}">
-                    <i class="la la-th"></i>
+                    <i class="la la-tools"></i>
                     <p>Repair</p>
-                    <span class="badge badge-count">6</span>
                 </a>
             </li>
 
-            <!-- NOTIFICATIONS -->
-            <li class="nav-item">
-                <a href="#">
+            <!-- NOTIFIKASI -->
+            <li class="nav-item {{ request()->routeIs('notifikasi.*') ? 'active' : '' }}">
+                <a href="{{ route('notifikasi.index') }}">
                     <i class="la la-bell"></i>
-                    <p>Notifications</p>
-                    <span class="badge badge-success">3</span>
+                    <p>Notifikasi</p>
                 </a>
             </li>
 
