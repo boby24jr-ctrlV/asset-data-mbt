@@ -17,6 +17,19 @@
     <link rel="stylesheet" href="<?php echo e(asset('assets/css/bootstrap.min.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('assets/css/ready.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('assets/css/demo.css')); ?>">
+
+    <!-- ✅ FIX DROPDOWN TIDAK KELIHATAN -->
+    <style>
+        select.form-select,
+        select.form-control {
+            color: #000 !important;
+        }
+
+        select option {
+            color: #000 !important;
+            background-color: #fff !important;
+        }
+    </style>
 </head>
 
 <body>

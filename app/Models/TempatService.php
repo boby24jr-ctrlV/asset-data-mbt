@@ -17,9 +17,9 @@ class TempatService extends Model
         'no_telepon',
     ];
 
-    // relasi ke repair
+    // Relasi ke repair (perbaiki foreign key)
     public function repairs()
     {
-        return $this->hasMany(Repair::class);
+        return $this->hasMany(Repair::class, 'tempat_services_id');
     }
 }

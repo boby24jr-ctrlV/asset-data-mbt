@@ -10,17 +10,16 @@ class Repair extends Model
     use HasFactory;
 
     protected $fillable = [
-    'item_id',
-    'user_id',
-    'tempat_services_id',
-    'tanggal_rusak',
-    'deskripsi_kerusakan',
-    'status',
-    'biaya',
-    'tanggal_selesai',
-    'catatan'
-];
-
+        'item_id',
+        'user_id',
+        'tempat_services_id',
+        'tanggal_rusak',
+        'deskripsi_kerusakan',
+        'status',
+        'biaya',
+        'tanggal_selesai',
+        'catatan'
+    ];
 
     public function item()
     {
