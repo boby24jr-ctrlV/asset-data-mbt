@@ -36,16 +36,23 @@
                         <?php $__empty_1 = true; $__currentLoopData = $histories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $h): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <tr>
                             <td><?php echo e($loop->iteration); ?></td>
-                            <td class="fw-semibold"><?php echo e($h->maintenanceSchedule->item->nama_barang); ?></td>
+
+                            <td class="fw-semibold">
+                                <?php echo e($h->item->nama_barang); ?>
+
+                            </td>
+
                             <td>
                                 <span class="badge bg-secondary">
-                                    <?php echo e($h->maintenanceSchedule->jenis_maintenance); ?>
+                                    <?php echo e($h->jenis_maintenance); ?>
 
                                 </span>
                             </td>
+
                             <td><?php echo e($h->tanggal_service); ?></td>
                             <td><?php echo e($h->technician->name ?? '-'); ?></td>
-                            <td>Rp <?php echo e(number_format($h->biaya,0,',','.')); ?></td>
+                            <td>Rp <?php echo e(number_format($h->biaya ?? 0,0,',','.')); ?></td>
+
                             <td class="text-center">
                                 <a href="<?php echo e(route('maintenance.histories.show',$h->id)); ?>"
                                    class="btn btn-outline-info btn-sm rounded-pill">Detail</a>

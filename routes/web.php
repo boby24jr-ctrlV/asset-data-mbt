@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MaintenanceScheduleController;
+use App\Http\Controllers\MaintenanceHistoryController;
 use App\Http\Controllers\RepairWebController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\TempatServiceController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\MaintenanceHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,29 +41,51 @@ Route::get('/', function () {
 */
 Route::middleware('auth')->group(function () {
 
-    // Dashboard
+    /*
+    |--------------------------------------------------------------------------
+    | Dashboard
+    |--------------------------------------------------------------------------
+    */
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
-    // Master Data
+    /*
+    |--------------------------------------------------------------------------
+    | Master Data
+    |--------------------------------------------------------------------------
+    */
     Route::resource('items', ItemController::class);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Maintenance History (WAJIB DIATAS schedule)
+    |--------------------------------------------------------------------------
+    */
     Route::prefix('maintenance')->group(function () {
+        Route::resource('histories', MaintenanceHistoryController::class)
+            ->names('maintenance.histories');
+    });
 
-        Route::get('/histories', [MaintenanceHistoryController::class, 'index'])
-            ->name('maintenance.histories.index');
-
-        Route::get('/histories/create', [MaintenanceHistoryController::class, 'create'])
-            ->name('maintenance.histories.create');
-
-        Route::post('/histories', [MaintenanceHistoryController::class, 'store'])
-            ->name('maintenance.histories.store');
-
-    }); // tutup prefix maintenance
+    /*
+    |--------------------------------------------------------------------------
+    | Maintenance Schedule
+    |--------------------------------------------------------------------------
+    */
     Route::resource('maintenance', MaintenanceScheduleController::class);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Repair & Tempat Service
+    |--------------------------------------------------------------------------
+    */
     Route::resource('repairs', RepairWebController::class);
     Route::resource('tempat_services', TempatServiceController::class);
 
-    // Notifications
+    /*
+    |--------------------------------------------------------------------------
+    | Notifications
+    |--------------------------------------------------------------------------
+    */
     Route::get('/notifikasi', [NotifikasiController::class, 'index'])
         ->name('notifikasi.index');
 
@@ -73,7 +95,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/notifikasi/{id}', [NotifikasiController::class, 'destroy'])
         ->name('notifikasi.destroy');
 
-    // Maintenance Histories (submenu maintenance)
-    
-
-}); // ✅ tutup middleware auth
+});

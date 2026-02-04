@@ -10,16 +10,17 @@ class MaintenanceHistory extends Model
     use HasFactory;
 
     protected $fillable = [
-        'maintenance_schedule_id',
+        'item_id',
+        'jenis_maintenance',
         'technician_id',
         'tanggal_service',
         'biaya',
         'catatan'
     ];
 
-    public function schedule()
+    public function item()
     {
-        return $this->belongsTo(MaintenanceSchedule::class,'maintenance_schedule_id');
+        return $this->belongsTo(Item::class);
     }
 
     public function technician()

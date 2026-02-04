@@ -35,15 +35,21 @@
                         @forelse($histories as $h)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td class="fw-semibold">{{ $h->maintenanceSchedule->item->nama_barang }}</td>
+
+                            <td class="fw-semibold">
+                                {{ $h->item->nama_barang }}
+                            </td>
+
                             <td>
                                 <span class="badge bg-secondary">
-                                    {{ $h->maintenanceSchedule->jenis_maintenance }}
+                                    {{ $h->jenis_maintenance }}
                                 </span>
                             </td>
+
                             <td>{{ $h->tanggal_service }}</td>
                             <td>{{ $h->technician->name ?? '-' }}</td>
-                            <td>Rp {{ number_format($h->biaya,0,',','.') }}</td>
+                            <td>Rp {{ number_format($h->biaya ?? 0,0,',','.') }}</td>
+
                             <td class="text-center">
                                 <a href="{{ route('maintenance.histories.show',$h->id) }}"
                                    class="btn btn-outline-info btn-sm rounded-pill">Detail</a>

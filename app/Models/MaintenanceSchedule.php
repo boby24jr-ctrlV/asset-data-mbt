@@ -7,13 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class MaintenanceSchedule extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'item_id',
         'jenis_maintenance',
-        'interval_bulan',
+        'interval_hari',
         'last_maintenance',
         'next_maintenance',
-        'status'
+        'status',
+        'catatan'
     ];
 
     public function item()
@@ -26,4 +29,3 @@ class MaintenanceSchedule extends Model
         return $this->hasMany(MaintenanceHistory::class);
     }
 }
-
