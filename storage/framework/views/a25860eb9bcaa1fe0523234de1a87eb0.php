@@ -63,6 +63,14 @@
                 </a>
             </li>
 
+            <!-- MAINTENANCEHistory -->
+            <li class="nav-item <?php echo e(request()->routeIs('MAINTENANCEHistory.*') ? 'active' : ''); ?>">
+                <a href="<?php echo e(route('maintenance.histories.index')); ?>">
+                    <i class="la la-calendar"></i>
+                    <p>Maintenance History</p>
+                </a>
+            </li>
+
             <!-- REPAIR -->
             <li class="nav-item <?php echo e(request()->routeIs('repairs.*') ? 'active' : ''); ?>">
                 <a href="<?php echo e(route('repairs.index')); ?>">

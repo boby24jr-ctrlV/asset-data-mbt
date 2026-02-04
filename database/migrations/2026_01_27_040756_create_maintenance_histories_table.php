@@ -13,13 +13,14 @@ return new class extends Migration
     {
     Schema::create('maintenance_histories', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('maintenance_schedule_id')->constrained('maintenance_schedules')->onDelete('cascade');
+    $table->foreignId('maintenance_schedule_id')->constrained()->onDelete('cascade');
+    $table->foreignId('technician_id')->nullable()->constrained('users')->nullOnDelete();
     $table->date('tanggal_service');
-    $table->string('dikerjakan_oleh');
-    $table->integer('biaya');
+    $table->integer('biaya')->nullable();
     $table->text('catatan')->nullable();
     $table->timestamps();
 });
+
 
     }
 

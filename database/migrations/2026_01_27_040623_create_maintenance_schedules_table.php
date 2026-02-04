@@ -15,13 +15,13 @@ return new class extends Migration
     $table->id();
     $table->foreignId('item_id')->constrained('items')->onDelete('cascade');
     $table->string('jenis_maintenance');
-    $table->integer('interval_hari');
-    $table->date('last_maintenance')->nullable();
+    $table->integer('interval_bulan');
+    $table->date('last_maintenance');
     $table->date('next_maintenance');
-    $table->enum('status', ['dijadwalkan', 'proses', 'selesai'])->default('dijadwalkan');
-    $table->text('catatan')->nullable();
+    $table->enum('status',['aktif','nonaktif'])->default('aktif');
     $table->timestamps();
 });
+
 
 
 

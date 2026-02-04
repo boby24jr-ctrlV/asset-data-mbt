@@ -4,19 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Maintenance;
-use App\Models\Repair;
-use App\Models\Repair as ModelsRepair;
 
 class Item extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'kode_barang',
         'nama_barang',
         'kategori',
+        'merk',
+        'tahun_pengadaan',
+        'harga_barang',
         'lokasi',
         'kondisi',
+        'status_pemakaian',
         'catatan',
     ];
 

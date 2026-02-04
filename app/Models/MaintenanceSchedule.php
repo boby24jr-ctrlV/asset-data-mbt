@@ -10,16 +10,20 @@ class MaintenanceSchedule extends Model
     protected $fillable = [
         'item_id',
         'jenis_maintenance',
-        'interval_hari',
+        'interval_bulan',
         'last_maintenance',
         'next_maintenance',
-        'status',
-        'catatan'
+        'status'
     ];
 
     public function item()
     {
         return $this->belongsTo(Item::class);
+    }
+
+    public function histories()
+    {
+        return $this->hasMany(MaintenanceHistory::class);
     }
 }
 

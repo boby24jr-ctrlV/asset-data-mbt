@@ -63,6 +63,14 @@
                 </a>
             </li>
 
+            <!-- MAINTENANCEHistory -->
+            <li class="nav-item {{ request()->routeIs('MAINTENANCEHistory.*') ? 'active' : '' }}">
+                <a href="{{ route('maintenance.histories.index') }}">
+                    <i class="la la-calendar"></i>
+                    <p>Maintenance History</p>
+                </a>
+            </li>
+
             <!-- REPAIR -->
             <li class="nav-item {{ request()->routeIs('repairs.*') ? 'active' : '' }}">
                 <a href="{{ route('repairs.index') }}">
