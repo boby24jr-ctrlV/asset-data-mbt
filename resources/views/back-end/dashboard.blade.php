@@ -41,8 +41,8 @@
                     <div class="col-md-3">
                         <div class="card card-stats card-warning">
                             <div class="card-body">
-                                <p class="card-category">Visitors</p>
-                                <h4 class="card-title">1,294</h4>
+                                <p class="card-category">Jumblah asset</p>
+                                <h4 class="card-title">1</h4>
                             </div>
                         </div>
                     </div>
@@ -50,8 +50,8 @@
                     <div class="col-md-3">
                         <div class="card card-stats card-success">
                             <div class="card-body">
-                                <p class="card-category">Sales</p>
-                                <h4 class="card-title">$1,345</h4>
+                                <p class="card-category">Jumlah Maintenence</p>
+                                <h4 class="card-title">1</h4>
                             </div>
                         </div>
                     </div>
@@ -59,21 +59,11 @@
                     <div class="col-md-3">
                         <div class="card card-stats card-danger">
                             <div class="card-body">
-                                <p class="card-category">Subscribers</p>
-                                <h4 class="card-title">1,303</h4>
+                                <p class="card-category">Jumlah Repair</p>
+                                <h4 class="card-title">1</h4>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-3">
-                        <div class="card card-stats card-primary">
-                            <div class="card-body">
-                                <p class="card-category">Orders</p>
-                                <h4 class="card-title">576</h4>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
             </div>

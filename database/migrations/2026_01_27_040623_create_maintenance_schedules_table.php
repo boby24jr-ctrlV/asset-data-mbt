@@ -13,16 +13,23 @@ return new class extends Migration
     {
   Schema::create('maintenance_schedules', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('item_id')->constrained('items')->onDelete('cascade');
+
+    $table->foreignId('item_id')
+          ->constrained('items')
+          ->cascadeOnDelete();
+
     $table->string('jenis_maintenance');
     $table->integer('interval_hari');
     $table->date('last_maintenance');
-    $table->date('next_maintenance');
-    $table->enum('status', ['dijadwalkan','proses','selesai'])
+
+    $table->enum('status',['dijadwalkan','proses','selesai'])
           ->default('dijadwalkan');
+
     $table->text('catatan')->nullable();
     $table->timestamps();
 });
+
+
 
 
 

@@ -9,37 +9,34 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('repairs', function (Blueprint $table) {
-            $table->id();
+    $table->id();
 
-            // barang yang diperbaiki
-            $table->foreignId('item_id')
-                  ->constrained('items')
-                  ->onDelete('cascade');
+    $table->foreignId('maintenance_schedule_id')
+          ->constrained('maintenance_schedules')
+          ->cascadeOnDelete();
 
-            // pelapor (user)
-            $table->foreignId('user_id')
-                  ->constrained('users')
-                  ->onDelete('cascade');
+    $table->foreignId('user_id')
+          ->constrained('users')
+          ->cascadeOnDelete();
 
-            // dikerjakan oleh (tempat service / internal)
-            $table->foreignId('tempat_services_id')
-                  ->nullable()
-                  ->constrained('tempat_services')
-                  ->nullOnDelete();
+    $table->foreignId('tempat_services_id')
+          ->nullable()
+          ->constrained('tempat_services')
+          ->nullOnDelete();
 
-            $table->date('tanggal_rusak');
-            $table->text('deskripsi_kerusakan');
+    $table->date('tanggal_rusak');
+    $table->text('deskripsi_kerusakan');
+    $table->integer('biaya')->nullable();
 
-            $table->integer('biaya')->nullable();
+    $table->enum('status', ['dilaporkan','proses','selesai'])
+          ->default('dilaporkan');
 
-            $table->enum('status', ['dilaporkan', 'proses', 'selesai'])
-                  ->default('dilaporkan');
+    $table->date('tanggal_selesai')->nullable();
+    $table->text('catatan')->nullable();
 
-            $table->date('tanggal_selesai')->nullable();
-            $table->text('catatan')->nullable();
+    $table->timestamps();
+});
 
-            $table->timestamps();
-        });
     }
 
     public function down(): void

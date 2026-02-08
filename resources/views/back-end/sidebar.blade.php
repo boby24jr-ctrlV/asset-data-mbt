@@ -10,21 +10,10 @@
             <div class="info">
                 <a data-toggle="collapse" href="#collapseUser" aria-expanded="true">
                     <span>
-                        Hizrian
+                        SIMAR
                         <span class="user-level">Administrator</span>
-                        <span class="caret"></span>
                     </span>
                 </a>
-
-                <div class="clearfix"></div>
-
-                <div class="collapse show" id="collapseUser">
-                    <ul class="nav">
-                        <li><a href="#"><span class="link-collapse">My Profile</span></a></li>
-                        <li><a href="#"><span class="link-collapse">Edit Profile</span></a></li>
-                        <li><a href="#"><span class="link-collapse">Settings</span></a></li>
-                    </ul>
-                </div>
             </div>
         </div>
 
@@ -62,28 +51,10 @@
                     <p>Maintenance Schedule</p>
                 </a>
             </li>
-
-            <!-- MAINTENANCEHistory -->
-            <li class="nav-item {{ request()->routeIs('MAINTENANCEHistory.*') ? 'active' : '' }}">
-                <a href="{{ route('maintenance.histories.index') }}">
-                    <i class="la la-calendar"></i>
-                    <p>Maintenance History</p>
-                </a>
-            </li>
-
-            <!-- REPAIR -->
             <li class="nav-item {{ request()->routeIs('repairs.*') ? 'active' : '' }}">
                 <a href="{{ route('repairs.index') }}">
                     <i class="la la-tools"></i>
                     <p>Repair</p>
-                </a>
-            </li>
-
-            <!-- NOTIFIKASI -->
-            <li class="nav-item {{ request()->routeIs('notifikasi.*') ? 'active' : '' }}">
-                <a href="{{ route('notifikasi.index') }}">
-                    <i class="la la-bell"></i>
-                    <p>Notifikasion</p>
                 </a>
             </li>
 

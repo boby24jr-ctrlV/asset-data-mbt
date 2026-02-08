@@ -10,7 +10,7 @@ class Repair extends Model
     use HasFactory;
 
     protected $fillable = [
-        'item_id',
+        'maintenance_schedule_id',
         'user_id',
         'tempat_services_id',
         'tanggal_rusak',
@@ -21,9 +21,9 @@ class Repair extends Model
         'catatan'
     ];
 
-    public function item()
+    public function schedule()
     {
-        return $this->belongsTo(Item::class);
+        return $this->belongsTo(MaintenanceSchedule::class, 'maintenance_schedule_id');
     }
 
     public function user()

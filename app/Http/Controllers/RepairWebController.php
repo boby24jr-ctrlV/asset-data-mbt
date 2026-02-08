@@ -4,95 +4,130 @@ namespace App\Http\Controllers;
 
 use App\Models\Repair;
 use App\Models\TempatService;
-use App\Models\Item;
-use App\Models\User;
+use App\Models\MaintenanceSchedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RepairWebController extends Controller
 {
-    // Menampilkan semua data repair
+    // ===============================
+    // INDEX
+    // ===============================
     public function index()
     {
-        $repairs = Repair::with(['item', 'user', 'tempatService'])->latest()->get();
+        $repairs = Repair::with([
+            'schedule.item',
+            'user',
+            'tempatService'
+        ])->latest()->get();
+
         return view('repairs.index', compact('repairs'));
     }
 
-    // Menampilkan form create
+    // ===============================
+    // CREATE
+    // ===============================
     public function create()
     {
+        $maintenanceSchedules = MaintenanceSchedule::with('item')->get();
         $services = TempatService::all();
-        $items = Item::all();
-        $users = User::all();
-        
-        return view('repairs.create', compact('services', 'items', 'users'));
+
+        return view('repairs.create', compact(
+            'maintenanceSchedules',
+            'services'
+        ));
     }
 
-    // Menyimpan data baru
+    // ===============================
+    // STORE
+    // ===============================
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'item_id' => 'required|exists:items,id',
-            'user_id' => 'required|exists:users,id',
-            'tempat_services_id' => 'nullable|exists:tempat_services,id',
-            'tanggal_rusak' => 'required|date',
-            'deskripsi_kerusakan' => 'required|string',
-            'status' => 'required|in:dilaporkan,proses,selesai',
-            'biaya' => 'nullable|numeric',
-            'tanggal_selesai' => 'nullable|date',
-            'catatan' => 'nullable|string',
+            'maintenance_schedule_id' => 'required|exists:maintenance_schedules,id',
+            'tempat_services_id'      => 'nullable|exists:tempat_services,id',
+            'tanggal_rusak'           => 'required|date',
+            'deskripsi_kerusakan'     => 'required|string',
         ]);
 
-        Repair::create($validated);
+        Repair::create([
+            'maintenance_schedule_id' => $validated['maintenance_schedule_id'],
+            'user_id'                 => Auth::id(),
+            'tempat_services_id'      => $validated['tempat_services_id'] ?? null,
+            'tanggal_rusak'           => $validated['tanggal_rusak'],
+            'deskripsi_kerusakan'     => $validated['deskripsi_kerusakan'],
+            'status'                  => 'dilaporkan',
+        ]);
 
-        return redirect()->route('repairs.index')->with('success', 'Data repair berhasil ditambahkan');
+        return redirect()
+            ->route('repairs.index')
+            ->with('success', 'Data repair berhasil ditambahkan');
     }
 
-    // Menampilkan detail
+    // ===============================
+    // SHOW
+    // ===============================
     public function show($id)
     {
-        $repair = Repair::with(['item', 'user', 'tempatService'])->findOrFail($id);
+        $repair = Repair::with([
+            'schedule.item',
+            'user',
+            'tempatService'
+        ])->findOrFail($id);
+
         return view('repairs.show', compact('repair'));
     }
 
-    // Menampilkan form edit
+    // ===============================
+    // EDIT
+    // ===============================
     public function edit($id)
     {
         $repair = Repair::findOrFail($id);
+        $maintenanceSchedules = MaintenanceSchedule::with('item')->get();
         $services = TempatService::all();
-        $items = Item::all();
-        $users = User::all();
-        
-        return view('repairs.edit', compact('repair', 'services', 'items', 'users'));
+
+        return view('repairs.edit', compact(
+            'repair',
+            'maintenanceSchedules',
+            'services'
+        ));
     }
 
-    // Update data
+    // ===============================
+    // UPDATE
+    // ===============================
     public function update(Request $request, $id)
     {
         $repair = Repair::findOrFail($id);
 
         $validated = $request->validate([
-            'item_id' => 'required|exists:items,id',
-            'user_id' => 'required|exists:users,id',
-            'tempat_services_id' => 'nullable|exists:tempat_services,id',
-            'tanggal_rusak' => 'required|date',
-            'deskripsi_kerusakan' => 'required|string',
-            'status' => 'required|in:dilaporkan,proses,selesai',
-            'biaya' => 'nullable|numeric',
-            'tanggal_selesai' => 'nullable|date',
-            'catatan' => 'nullable|string',
+            'maintenance_schedule_id' => 'required|exists:maintenance_schedules,id',
+            'tempat_services_id'      => 'nullable|exists:tempat_services,id',
+            'tanggal_rusak'           => 'required|date',
+            'deskripsi_kerusakan'     => 'required|string',
+            'status'                  => 'required|in:dilaporkan,proses,selesai',
+            'biaya'                   => 'nullable|numeric',
+            'tanggal_selesai'         => 'nullable|date',
+            'catatan'                 => 'nullable|string',
         ]);
 
         $repair->update($validated);
 
-        return redirect()->route('repairs.index')->with('success', 'Data repair berhasil diupdate');
+        return redirect()
+            ->route('repairs.index')
+            ->with('success', 'Data repair berhasil diupdate');
     }
 
-    // Hapus data
+    // ===============================
+    // DESTROY
+    // ===============================
     public function destroy($id)
     {
-        $repair = Repair::findOrFail($id);
-        $repair->delete();
+        Repair::findOrFail($id)->delete();
 
-        return redirect()->route('repairs.index')->with('success', 'Data repair berhasil dihapus');
+        return redirect()
+            ->route('repairs.index')
+            ->with('success', 'Data repair berhasil dihapus');
     }
 }
