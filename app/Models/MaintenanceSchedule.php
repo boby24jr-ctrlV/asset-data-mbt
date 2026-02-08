@@ -25,12 +25,13 @@ class MaintenanceSchedule extends Model
     }
 
     public function item()
-    {
-        return $this->belongsTo(Item::class);
-    }
+{
+    return $this->belongsTo(Item::class, 'item_id');
+}
 
-    public function repairs()
-    {
-        return $this->hasMany(Repair::class);
-    }
+public function repairs()
+{
+    return $this->hasMany(Repair::class, 'maintenance_schedule_id');
+}
+
 }

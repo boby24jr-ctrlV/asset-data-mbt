@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\MaintenanceSchedule;
-use App\Models\MaintenanceHistory;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 
 class MaintenanceScheduleController extends Controller
 {
@@ -32,6 +30,13 @@ class MaintenanceScheduleController extends Controller
         ));
     }
 
+    // ✅ INI YANG KURANG (PENYEBAB ERROR)
+    public function create()
+    {
+        $items = Item::all();
+        return view('maintenance.create', compact('items'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -41,19 +46,47 @@ class MaintenanceScheduleController extends Controller
             'last_maintenance' => 'required|date'
         ]);
 
-        MaintenanceSchedule::create($request->all());
+        MaintenanceSchedule::create([
+            'item_id' => $request->item_id,
+            'jenis_maintenance' => $request->jenis_maintenance,
+            'interval_hari' => $request->interval_hari,
+            'last_maintenance' => $request->last_maintenance,
+            'status' => 'dijadwalkan',
+            'catatan' => $request->catatan
+        ]);
 
-        return redirect()->route('maintenance.index');
+        return redirect()->route('maintenance.index')
+            ->with('success','Jadwal maintenance berhasil ditambahkan');
     }
 
-    public function update(Request $request, MaintenanceSchedule $maintenance)
+    public function edit($id)
     {
+        $maintenance = MaintenanceSchedule::findOrFail($id);
+        $items = Item::all();
+
+        return view('maintenance.edit', compact('maintenance','items'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $maintenance = MaintenanceSchedule::findOrFail($id);
+
         $request->validate([
             'status' => 'required|in:dijadwalkan,proses,selesai'
         ]);
 
         $maintenance->update($request->all());
 
-        return redirect()->route('maintenance.index');
+        return redirect()->route('maintenance.index')
+            ->with('success','Data berhasil diupdate');
+    }
+
+    public function destroy($id)
+    {
+        $maintenance = MaintenanceSchedule::findOrFail($id);
+        $maintenance->delete();
+
+        return redirect()->route('maintenance.index')
+            ->with('success','Data berhasil dihapus');
     }
 }

@@ -19,17 +19,18 @@
         @method('PUT')
 
         <div class="mb-3">
-            <label class="form-label">Item</label>
-            <select name="item_id" class="form-control" required>
-                <option value="">-- Pilih Item --</option>
-                @foreach($items as $item)
-                    <option value="{{ $item->id }}" 
-                        {{ old('item_id', $repair->item_id) == $item->id ? 'selected' : '' }}>
-                        {{ $item->nama }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+    <label class="form-label">Item</label>
+    <select name="maintenance_schedule_id" class="form-control" required>
+        <option value="">-- Pilih Item --</option>
+        @foreach($maintenanceSchedules as $ms)
+            <option value="{{ $ms->id }}"
+                {{ old('maintenance_schedule_id', $repair->maintenance_schedule_id) == $ms->id ? 'selected' : '' }}>
+                {{ $ms->item->nama_barang ?? 'Item tidak ada' }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
 
         <div class="mb-3">
             <label class="form-label">User</label>

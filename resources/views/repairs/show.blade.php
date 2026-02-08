@@ -5,7 +5,7 @@
     <h3>🔍 Detail Repair</h3>
 
     <ul class="list-group">
-        <li class="list-group-item"><b>Barang:</b> {{ $repair->item->nama_barang }}</li>
+        <li class="list-group-item"><b>Barang:</b>  {{ $repair->item?->nama_barang ?? 'Item tidak ditemukan' }}</li>
         <li class="list-group-item"><b>Pelapor:</b> {{ $repair->user->name }}</li>
         <li class="list-group-item"><b>Tanggal Rusak:</b> {{ $repair->tanggal_rusak }}</li>
         <li class="list-group-item"><b>Status:</b> {{ $repair->status }}</li>

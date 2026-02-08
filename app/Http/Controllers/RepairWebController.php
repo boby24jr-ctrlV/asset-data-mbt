@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Repair;
 use App\Models\TempatService;
 use App\Models\MaintenanceSchedule;
@@ -81,18 +82,20 @@ class RepairWebController extends Controller
     // ===============================
     // EDIT
     // ===============================
-    public function edit($id)
-    {
-        $repair = Repair::findOrFail($id);
-        $maintenanceSchedules = MaintenanceSchedule::with('item')->get();
-        $services = TempatService::all();
+    public function edit(Repair $repair)
+{
+    $users = User::all();
+    $services = TempatService::all();
+    $maintenanceSchedules = MaintenanceSchedule::with('item')->get();
 
-        return view('repairs.edit', compact(
-            'repair',
-            'maintenanceSchedules',
-            'services'
-        ));
-    }
+    return view('repairs.edit', compact(
+        'repair',
+        'users',
+        'services',
+        'maintenanceSchedules'
+    ));
+}
+
 
     // ===============================
     // UPDATE

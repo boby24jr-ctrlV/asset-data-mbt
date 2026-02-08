@@ -1,19 +1,17 @@
-@extends('be.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="container py-4">
     <div class="card shadow-sm border-0 rounded-4">
         <div class="card-body">
 
-            {{-- Header --}}
+            
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="fw-semibold mb-0">🔧 Data Repair</h4>
-                <a href="{{ route('repairs.create') }}" class="btn btn-primary rounded-pill px-4">
+                <a href="<?php echo e(route('repairs.create')); ?>" class="btn btn-primary rounded-pill px-4">
                     + Tambah Repair
                 </a>
             </div>
 
-            {{-- Table --}}
+            
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
@@ -27,48 +25,50 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($repairs as $repair)
+                        <?php $__empty_1 = true; $__currentLoopData = $repairs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $repair): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
+                            <td><?php echo e($loop->iteration); ?></td>
 
                             <td class="fw-semibold">
-   {{ $repair->schedule?->item?->nama_barang ?? 'Item tidak ditemukan' }}
+   <?php echo e($repair->schedule?->item?->nama_barang ?? 'Item tidak ditemukan'); ?>
+
 
 
 </td>
 
 
-                            <td>{{ $repair->tanggal_rusak }}</td>
+                            <td><?php echo e($repair->tanggal_rusak); ?></td>
 
                             <td>
-                                @if($repair->status == 'selesai')
+                                <?php if($repair->status == 'selesai'): ?>
                                     <span class="badge bg-success">Selesai</span>
-                                @elseif($repair->status == 'proses')
+                                <?php elseif($repair->status == 'proses'): ?>
                                     <span class="badge bg-warning text-dark">Proses</span>
-                                @else
+                                <?php else: ?>
                                     <span class="badge bg-secondary">Dilaporkan</span>
-                                @endif
+                                <?php endif; ?>
                             </td>
 
                             <td>
-                                {{ $repair->biaya ? 'Rp '.number_format($repair->biaya,0,',','.') : '-' }}
+                                <?php echo e($repair->biaya ? 'Rp '.number_format($repair->biaya,0,',','.') : '-'); ?>
+
                             </td>
 
                             <td class="text-center">
-                                <a href="{{ route('repairs.show', $repair->id) }}"
+                                <a href="<?php echo e(route('repairs.show', $repair->id)); ?>"
                                    class="btn btn-outline-info btn-sm rounded-pill">
                                     Detail
                                 </a>
 
-                                <a href="{{ route('repairs.edit', $repair->id) }}"
+                                <a href="<?php echo e(route('repairs.edit', $repair->id)); ?>"
                                    class="btn btn-outline-warning btn-sm rounded-pill">
                                     Edit
                                 </a>
 
-                                <form action="{{ route('repairs.destroy', $repair->id) }}"
+                                <form action="<?php echo e(route('repairs.destroy', $repair->id)); ?>"
                                       method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo method_field('DELETE'); ?>
                                     <button onclick="return confirm('Yakin hapus data repair ini?')"
                                             class="btn btn-outline-danger btn-sm rounded-pill">
                                         Hapus
@@ -76,13 +76,13 @@
                                 </form>
                             </td>
                         </tr>
-                        @empty
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <tr>
                             <td colspan="6" class="text-center text-muted py-4">
                                 Belum ada data repair
                             </td>
                         </tr>
-                        @endforelse
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -90,4 +90,6 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('be.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\asset-data-mbt\resources\views/repairs/index.blade.php ENDPATH**/ ?>
