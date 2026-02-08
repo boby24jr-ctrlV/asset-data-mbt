@@ -282,6 +282,11 @@
                 <div class="forgot-password">
                     <a href="#"><i class="fas fa-question-circle me-1"></i>Forgot Password?</a>
                 </div>
+
+                <p class="text-center">
+            <a href="{{ route('student.login') }}">Login sebagai Student</a>
+
+        </p>
             </form>
         </div>
     </div>

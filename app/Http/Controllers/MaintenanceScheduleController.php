@@ -25,6 +25,8 @@ class MaintenanceScheduleController extends Controller
             && $m->status !== 'selesai'
         );
 
+        
+
         return view('maintenance.index', compact(
             'maintenances','mendekati','terlambat'
         ));

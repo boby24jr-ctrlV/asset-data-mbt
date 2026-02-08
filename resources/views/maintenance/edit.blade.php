@@ -7,7 +7,7 @@
 
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-header bg-warning text-white rounded-top-4">
-                    <h5 class="mb-0">✏ Edit Jadwal Maintenance</h5>
+                    <h5 class="mb-0">✏ Edit  Bocil Jadwal Maintenance</h5>
                 </div>
 
                 <div class="card-body">

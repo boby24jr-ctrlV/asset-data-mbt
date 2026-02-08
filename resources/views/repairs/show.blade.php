@@ -2,19 +2,50 @@
 
 @section('content')
 <div class="container">
-    <h3>🔍 Detail Repair</h3>
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">🔍 Detail Repair</h4>
+            <span class="badge bg-light text-dark">{{ $repair->status }}</span>
+        </div>
 
-    <ul class="list-group">
-        <li class="list-group-item"><b>Barang:</b>  {{ $repair->item?->nama_barang ?? 'Item tidak ditemukan' }}</li>
-        <li class="list-group-item"><b>Pelapor:</b> {{ $repair->user->name }}</li>
-        <li class="list-group-item"><b>Tanggal Rusak:</b> {{ $repair->tanggal_rusak }}</li>
-        <li class="list-group-item"><b>Status:</b> {{ $repair->status }}</li>
-        <li class="list-group-item"><b>Biaya:</b> {{ $repair->biaya ?? '-' }}</li>
-        <li class="list-group-item"><b>Tanggal Selesai:</b> {{ $repair->tanggal_selesai ?? '-' }}</li>
-        <li class="list-group-item"><b>Catatan:</b> {{ $repair->catatan ?? '-' }}</li>
-        <li class="list-group-item"><b>Deskripsi:</b> {{ $repair->deskripsi_kerusakan }}</li>
-    </ul>
+        <div class="card-body">
+            <table class="table table-borderless">
+                <tr>
+                    <th width="30%">Barang</th>
+                    <td>:{{ $repair->schedule?->item?->nama_barang ?? 'Item tidak ditemukan' }}</td>
+                </tr>
+                <tr>
+                    <th>Pelapor</th>
+                    <td>: {{ $repair->user->name }}</td>
+                </tr>
+                <tr>
+                    <th>Tanggal Rusak</th>
+                    <td>: {{ $repair->tanggal_rusak }}</td>
+                </tr>
+                <tr>
+                    <th>Biaya</th>
+                    <td>: {{ $repair->biaya ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <th>Tanggal Selesai</th>
+                    <td>: {{ $repair->tanggal_selesai ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <th>Catatan</th>
+                    <td>: {{ $repair->catatan ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <th>Deskripsi Kerusakan</th>
+                    <td>: {{ $repair->deskripsi_kerusakan }}</td>
+                </tr>
+            </table>
+        </div>
 
-    <a href="{{ route('repairs.index') }}" class="btn btn-secondary mt-3">Kembali</a>
+        <div class="card-footer text-end">
+            <a href="{{ route('repairs.index') }}" class="btn btn-secondary">
+                ⬅ Kembali
+            </a>
+        </div>
+    </div>
 </div>
 @endsection

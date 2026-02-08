@@ -28,6 +28,14 @@
                 </a>
             </li>
 
+            <li class="nav-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
+    <a href="{{ route('users.index') }}">
+        <i class="la la-users"></i>
+        <p>Daftar User</p>
+    </a>
+</li>
+
+
             <!-- DATA BARANG -->
             <li class="nav-item {{ request()->routeIs('items.*') ? 'active' : '' }}">
                 <a href="{{ route('items.index') }}">

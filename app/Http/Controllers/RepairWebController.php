@@ -14,16 +14,18 @@ class RepairWebController extends Controller
     // ===============================
     // INDEX
     // ===============================
-    public function index()
-    {
-        $repairs = Repair::with([
-            'schedule.item',
-            'user',
-            'tempatService'
-        ])->latest()->get();
+    public function index(Request $request)
+{
+    $query = Repair::with(['schedule.item']);
 
-        return view('repairs.index', compact('repairs'));
+    if ($request->status) {
+        $query->where('status', $request->status);
     }
+
+    $repairs = $query->latest()->get();
+
+    return view('repairs.index', compact('repairs'));
+}
 
     // ===============================
     // CREATE

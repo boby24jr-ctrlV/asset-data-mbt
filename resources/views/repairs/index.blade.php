@@ -13,6 +13,29 @@
                 </a>
             </div>
 
+            {{-- Filter Status --}}
+            <div class="mb-3 d-flex gap-2 flex-wrap">
+                <a href="{{ route('repairs.index') }}"
+                   class="btn btn-outline-secondary btn-sm {{ request('status') == null ? 'active' : '' }}">
+                    Semua
+                </a>
+
+                <a href="{{ route('repairs.index', ['status' => 'dilaporkan']) }}"
+                   class="btn btn-outline-secondary btn-sm {{ request('status') == 'dilaporkan' ? 'active' : '' }}">
+                    Dilaporkan
+                </a>
+
+                <a href="{{ route('repairs.index', ['status' => 'proses']) }}"
+                   class="btn btn-outline-warning btn-sm {{ request('status') == 'proses' ? 'active' : '' }}">
+                    Proses
+                </a>
+
+                <a href="{{ route('repairs.index', ['status' => 'selesai']) }}"
+                   class="btn btn-outline-success btn-sm {{ request('status') == 'selesai' ? 'active' : '' }}">
+                    Selesai
+                </a>
+            </div>
+
             {{-- Table --}}
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
@@ -32,11 +55,8 @@
                             <td>{{ $loop->iteration }}</td>
 
                             <td class="fw-semibold">
-   {{ $repair->schedule?->item?->nama_barang ?? 'Item tidak ditemukan' }}
-
-
-</td>
-
+                                {{ $repair->schedule?->item?->nama_barang ?? 'Item tidak ditemukan' }}
+                            </td>
 
                             <td>{{ $repair->tanggal_rusak }}</td>
 
