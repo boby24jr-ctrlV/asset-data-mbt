@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MaintenanceSchedule extends Model
 {
     protected $fillable = [
+        'user_id',
         'item_id',
         'jenis_maintenance',
         'interval_hari',
@@ -22,6 +23,11 @@ class MaintenanceSchedule extends Model
     {
         return \Carbon\Carbon::parse($this->last_maintenance)
             ->addDays($this->interval_hari);
+    }
+
+      public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function item()

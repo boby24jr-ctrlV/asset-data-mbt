@@ -9,10 +9,14 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // ================= ADMIN LOGIN =================
+    /*
+    |--------------------------------------------------------------------------
+    | ADMIN LOGIN
+    |--------------------------------------------------------------------------
+    */
     public function showLoginForm()
     {
-        return view('auth.login'); // login admin
+        return view('auth.login');
     }
 
     public function login(Request $request)
@@ -22,26 +26,26 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
-
-            // 🔐 CEK ROLE ADMIN
-            if (auth()->user()->role === 'admin') {
-                $request->session()->regenerate();
-                return redirect()->route('dashboard');
-            }
-
-            // kalau bukan admin → logout
-            Auth::logout();
-            return back()->with('error', 'Akun ini bukan admin');
+        // Login menggunakan guard 'web' (admin)
+        if (Auth::guard('web')->attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/dashboard');
         }
 
-        return back()->with('error', 'Email atau password salah');
+        return back()->withErrors([
+            'email' => 'Kredensial tidak valid.',
+        ])->onlyInput('email');
     }
 
-    // ================= STUDENT LOGIN =================
+    /*
+    |--------------------------------------------------------------------------
+    | STUDENT LOGIN
+    |--------------------------------------------------------------------------
+    */
     public function showStudentLogin()
     {
-        return view('auth.login-student');
+        // Ganti ke view yang sesuai struktur Anda
+        return view('auth.login-student'); // atau 'student.login' sesuai struktur folder Anda
     }
 
     public function studentLogin(Request $request)
@@ -51,53 +55,70 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
-
-            // 🔐 CEK ROLE STUDENT
-            if (auth()->user()->role === 'student') {
-                $request->session()->regenerate();
-                return redirect()->route('fe.dashboard');
-            }
-
-            // kalau bukan student → logout
-            Auth::logout();
-            return back()->with('error', 'Akun ini bukan student');
+        // PENTING: Login menggunakan guard 'student'
+        if (Auth::guard('student')->attempt($credentials)) {
+            $request->session()->regenerate();
+            
+            // Redirect ke dashboard student
+            return redirect()->intended(route('fe.dashboard'));
         }
 
-        return back()->with('error', 'Email atau password salah');
+        return back()->withErrors([
+            'email' => 'Kredensial tidak valid.',
+        ])->onlyInput('email');
     }
 
-    // ================= STUDENT REGISTER =================
+    /*
+    |--------------------------------------------------------------------------
+    | STUDENT REGISTER
+    |--------------------------------------------------------------------------
+    */
     public function showRegisterForm()
     {
-        return view('auth.register');
+        // Ganti ke view yang sesuai struktur Anda
+        return view('fe.register'); // atau 'student.register'
     }
 
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:6',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'student', // default student
+            'role' => 'student', // PENTING: set role student
         ]);
 
-        return redirect()->route('student.login');
+        // Auto login setelah register menggunakan guard student
+        Auth::guard('student')->login($user);
+
+        return redirect()->route('fe.dashboard')->with('success', 'Registrasi berhasil!');
     }
 
-    // ================= LOGOUT =================
+    /*
+    |--------------------------------------------------------------------------
+    | LOGOUT
+    |--------------------------------------------------------------------------
+    */
     public function logout(Request $request)
     {
-        Auth::logout();
+        // Cek guard mana yang sedang login
+        if (Auth::guard('student')->check()) {
+            Auth::guard('student')->logout();
+            $redirectRoute = 'student.login';
+        } else {
+            Auth::guard('web')->logout();
+            $redirectRoute = 'login';
+        }
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect()->route($redirectRoute);
     }
 }

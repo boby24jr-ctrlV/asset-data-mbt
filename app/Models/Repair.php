@@ -18,21 +18,36 @@ class Repair extends Model
         'status',
         'biaya',
         'tanggal_selesai',
-        'catatan'
+        'catatan',
     ];
 
-    public function schedule()
+    protected $casts = [
+        'tanggal_rusak' => 'date',
+        'tanggal_selesai' => 'date',
+        'biaya' => 'integer',
+    ];
+
+    // Relasi ke MaintenanceSchedule
+    public function maintenanceSchedule()
     {
         return $this->belongsTo(MaintenanceSchedule::class, 'maintenance_schedule_id');
     }
 
-    public function user()
+    // Alias untuk kompatibilitas dengan RepairWebController
+    public function schedule()
     {
-        return $this->belongsTo(User::class);
+        return $this->maintenanceSchedule();
     }
 
+    // Relasi ke TempatService
     public function tempatService()
     {
         return $this->belongsTo(TempatService::class, 'tempat_services_id');
+    }
+
+    // Relasi ke User (Student/Admin yang melaporkan)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

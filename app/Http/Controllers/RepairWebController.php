@@ -11,25 +11,22 @@ use Illuminate\Support\Facades\Auth;
 
 class RepairWebController extends Controller
 {
-    // ===============================
-    // INDEX
-    // ===============================
+    // INDEX - Admin melihat SEMUA data perbaikan
     public function index(Request $request)
-{
-    $query = Repair::with(['schedule.item']);
+    {
+        $query = Repair::with(['maintenanceSchedule.item', 'user', 'tempatService']);
 
-    if ($request->status) {
-        $query->where('status', $request->status);
+        // Filter berdasarkan status jika ada
+        if ($request->status) {
+            $query->where('status', $request->status);
+        }
+
+        $repairs = $query->latest()->get();
+
+        return view('repairs.index', compact('repairs'));
     }
 
-    $repairs = $query->latest()->get();
-
-    return view('repairs.index', compact('repairs'));
-}
-
-    // ===============================
     // CREATE
-    // ===============================
     public function create()
     {
         $maintenanceSchedules = MaintenanceSchedule::with('item')->get();
@@ -41,9 +38,7 @@ class RepairWebController extends Controller
         ));
     }
 
-    // ===============================
     // STORE
-    // ===============================
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -64,16 +59,14 @@ class RepairWebController extends Controller
 
         return redirect()
             ->route('repairs.index')
-            ->with('success', 'Data repair berhasil ditambahkan');
+            ->with('success', '✅ Data repair berhasil ditambahkan');
     }
 
-    // ===============================
     // SHOW
-    // ===============================
     public function show($id)
     {
         $repair = Repair::with([
-            'schedule.item',
+            'maintenanceSchedule.item',
             'user',
             'tempatService'
         ])->findOrFail($id);
@@ -81,27 +74,22 @@ class RepairWebController extends Controller
         return view('repairs.show', compact('repair'));
     }
 
-    // ===============================
     // EDIT
-    // ===============================
     public function edit(Repair $repair)
-{
-    $users = User::all();
-    $services = TempatService::all();
-    $maintenanceSchedules = MaintenanceSchedule::with('item')->get();
+    {
+        $users = User::all();
+        $services = TempatService::all();
+        $maintenanceSchedules = MaintenanceSchedule::with('item')->get();
 
-    return view('repairs.edit', compact(
-        'repair',
-        'users',
-        'services',
-        'maintenanceSchedules'
-    ));
-}
+        return view('repairs.edit', compact(
+            'repair',
+            'users',
+            'services',
+            'maintenanceSchedules'
+        ));
+    }
 
-
-    // ===============================
-    // UPDATE
-    // ===============================
+    // UPDATE - Admin bisa update status, biaya, dll
     public function update(Request $request, $id)
     {
         $repair = Repair::findOrFail($id);
@@ -121,18 +109,16 @@ class RepairWebController extends Controller
 
         return redirect()
             ->route('repairs.index')
-            ->with('success', 'Data repair berhasil diupdate');
+            ->with('success', '✅ Data repair berhasil diupdate');
     }
 
-    // ===============================
     // DESTROY
-    // ===============================
     public function destroy($id)
     {
         Repair::findOrFail($id)->delete();
 
         return redirect()
             ->route('repairs.index')
-            ->with('success', 'Data repair berhasil dihapus');
+            ->with('success', '✅ Data repair berhasil dihapus');
     }
 }

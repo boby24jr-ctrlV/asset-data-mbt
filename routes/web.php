@@ -1,52 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ItemController;
-use App\Http\Controllers\MaintenanceScheduleController;
-use App\Http\Controllers\MaintenanceHistoryController;
-use App\Http\Controllers\RepairWebController;
-use App\Http\Controllers\NotifikasiController;
-use App\Http\Controllers\TempatServiceController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
-
-/*
-|--------------------------------------------------------------------------
-| AUTH ADMIN
-|--------------------------------------------------------------------------
-*/
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+use App\Http\Controllers\{
+    DashboardController,
+    ItemController,
+    MaintenanceScheduleController,
+    MaintenanceHistoryController,
+    RepairWebController,
+    NotifikasiController,
+    TempatServiceController,
+    AuthController,
+    UserController,
+    PemeliharaanController,
+    PerbaikanController
+};
 
 /*
 |--------------------------------------------------------------------------
-| AUTH STUDENT
-|--------------------------------------------------------------------------
-*/
-Route::get('/student/login', [AuthController::class, 'showStudentLogin'])
-    ->name('student.login');
-
-Route::post('/student/login', [AuthController::class, 'studentLogin'])
-    ->name('student.login.post');
-
-Route::get('/student/register', [AuthController::class, 'showRegisterForm'])
-    ->name('student.register');
-
-Route::post('/student/register', [AuthController::class, 'register'])
-    ->name('student.register.post');
-
-/*
-|--------------------------------------------------------------------------
-| LOGOUT
-|--------------------------------------------------------------------------
-*/
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-/*
-|--------------------------------------------------------------------------
-| ROOT
+| PUBLIC / LANDING
 |--------------------------------------------------------------------------
 */
 Route::get('/', function () {
@@ -55,16 +26,48 @@ Route::get('/', function () {
 
 /*
 |--------------------------------------------------------------------------
-| PROTECTED ROUTES
+| AUTH ADMIN
+|--------------------------------------------------------------------------
+*/
+Route::get('/login', [AuthController::class, 'showLoginForm'])
+    ->name('login');
+
+Route::post('/login', [AuthController::class, 'login'])
+    ->name('login.post');
+
+/*
+|--------------------------------------------------------------------------
+| AUTH STUDENT
+|--------------------------------------------------------------------------
+*/
+Route::prefix('student')->group(function () {
+    Route::get('/login', [AuthController::class, 'showStudentLogin'])
+        ->name('student.login');
+
+    Route::post('/login', [AuthController::class, 'studentLogin'])
+        ->name('student.login.post');
+
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])
+        ->name('student.register');
+
+    Route::post('/register', [AuthController::class, 'register'])
+        ->name('student.register.post');
+});
+
+/*
+|--------------------------------------------------------------------------
+| LOGOUT
+|--------------------------------------------------------------------------
+*/
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->name('logout');
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN AREA - Gunakan middleware auth (guard web)
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')->group(function () {
-
-    /*
-    |--------------------------------------------------------------------------
-    | ADMIN AREA
-    |--------------------------------------------------------------------------
-    */
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
@@ -82,14 +85,27 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/notifikasi', [NotifikasiController::class, 'index'])
         ->name('notifikasi.index');
+});
 
-    /*
-    |--------------------------------------------------------------------------
-    | STUDENT AREA
-    |--------------------------------------------------------------------------
-    */
-    Route::get('/student', function () {
+/*
+|--------------------------------------------------------------------------
+| STUDENT AREA - Gunakan middleware auth:student
+|--------------------------------------------------------------------------
+*/
+Route::prefix('student')->middleware('auth:student')->group(function () {
+    Route::get('/dashboard', function () {
         return view('fe.dashboard');
     })->name('fe.dashboard');
 
+    Route::get('/pemeliharaan', [PemeliharaanController::class, 'index'])
+        ->name('pemeliharaan.index');
+
+    Route::post('/pemeliharaan', [PemeliharaanController::class, 'store'])
+        ->name('pemeliharaan.store');
+
+    Route::get('/perbaikan', [PerbaikanController::class, 'index'])
+        ->name('perbaikan.index');
+
+    Route::post('/perbaikan', [PerbaikanController::class, 'store'])
+        ->name('perbaikan.store');
 });
